@@ -2,23 +2,8 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
-    signingConfigs {
-        release {
-            if (System.getenv()["CI"]) {
-                if (System.getenv()["TRAVIS_PULL_REQUEST"] == "false") {
-                    storeFile file(System.getenv("STORE_FILE"))
-                    storePassword System.getenv("STORE_PASSWORD")
-                    keyAlias System.getenv("KEY_ALIAS")
-                    keyPassword System.getenv("KEY_PASSWORD")
-                }
-            } else {
-                storeFile file(STORE_FILE)
-                storePassword STORE_PASSWORD
-                keyAlias KEY_ALIAS
-                keyPassword KEY_PASSWORD
-            }
-        }
-    }
+    buildToolsVersion '28.0.3'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "bin.xposed.Unblock163MusicClient"
         minSdkVersion 16
@@ -33,7 +18,6 @@ android {
             shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
     lintOptions {
@@ -48,16 +32,16 @@ android {
 dependencies {
     compileOnly 'de.robv.android.xposed:api:53'
     compileOnly 'de.robv.android.xposed:api:53:sources'
-    implementation 'com.annimon:stream:1.2.1'
-    implementation project(':hotxposed')
+    implementation 'dnsjava:dnsjava:2.1.8'
+    implementation 'com.annimon:stream:1.2.0'
+    implementation project(path: ':hotxposed')
 }
 
 afterEvaluate {
     installDebug.doLast {
-//        updateVirtualXposedAPP.execute()
-//        rebootVirtualXposedAPP.execute()
-//        launchVirtualXposedAPP.execute()
-        restartCloudMusic.execute()
+        updateVirtualXposedAPP.execute()
+        rebootVirtualXposedAPP.execute()
+        launchVirtualXposedAPP.execute()
     }
 }
 
@@ -73,12 +57,4 @@ task rebootVirtualXposedAPP(type: Exec) {
 task launchVirtualXposedAPP(type: Exec) {
     def pkg = "com.netease.cloudmusic"
     commandLine android.adbExecutable, 'shell', 'am', 'broadcast', '-a', 'io.va.exposed.CMD', '-e', 'cmd', 'launch', '-e', 'pkg', pkg
-    commandLine android.adbExecutable, 'shell', 'am', 'force-stop', pkg
 }
-
-task restartCloudMusic(type: Exec) {
-    def pkg = "com.netease.cloudmusic"
-    commandLine 'adb', 'shell', 'am', 'force-stop', pkg
-    commandLine 'adb', 'shell', 'monkey', '-p', pkg, "1"
-}
-

@@ -32,13 +32,13 @@ public class TipsFor3rd extends Hooker {
 
 
         try {
-            findAndHookMethod(CloudMusicPackage.MusicInfo.getClazz(), "getAppendCopyRight", set3rdStr);
+            findAndHookMethod(CloudMusicPackage.MusicInfo.getClazz(), "getAppendCopyRight", new Object[]{set3rdStr});
         } catch (Throwable t) {
             log(t);
         }
 
         try {
-            findAndHookMethod(CloudMusicPackage.MusicInfo.getClazz(), "getThirdTitle", boolean.class, set3rdStr);
+            findAndHookMethod(CloudMusicPackage.MusicInfo.getClazz(), "getThirdTitle", new Object[]{boolean.class, set3rdStr});
         } catch (Throwable t) {
             log(t);
         }

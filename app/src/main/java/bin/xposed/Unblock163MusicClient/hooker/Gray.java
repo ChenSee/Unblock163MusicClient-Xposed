@@ -15,14 +15,14 @@ public class Gray extends Hooker {
 
         if (Settings.isPreventGrayEnabled()) {
 
-            findAndHookMethod(CloudMusicPackage.MusicInfo.getClazz(), "hasCopyRight", new XC_MethodHook() {
+            findAndHookMethod(CloudMusicPackage.MusicInfo.getClazz(), "hasCopyRight", new Object[]{new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     if (!Utils.isCallFromMyself()) {
                         param.setResult(true);
                     }
                 }
-            });
+            }});
 
         }
     }

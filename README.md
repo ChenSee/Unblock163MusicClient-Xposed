@@ -1,4 +1,4 @@
-# Unblock163MusicClient - Xposed
+# Unblock163MusicClient - EdXposed - Adaptation
 
 Xposed version of EraserKing's [Unblock163MusicClient](https://github.com/EraserKing/Unblock163MusicClient).
 

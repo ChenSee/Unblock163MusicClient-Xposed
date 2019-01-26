@@ -24,7 +24,7 @@ public class Oversea extends Hooker {
         if (Settings.isOverseaModeEnabled()) {
             String[] methods = {"getByName", "getAllByName"};
             for (String method : methods) {
-                findAndHookMethod(java.net.InetAddress.class, method, String.class, new XC_MethodHook() {
+                findAndHookMethod(java.net.InetAddress.class, method, new Object[]{String.class, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         String host = (String) param.args[0];
@@ -33,11 +33,11 @@ public class Oversea extends Hooker {
                             param.setResult("getAllByName".equals(param.method.getName()) ? ips : ips[0]);
                         }
                     }
-                });
+                }});
             }
 
 
-            findAndHookMethod("com.netease.hearttouch.hthttpdns.model.DNSEntity", CloudMusicPackage.getClassLoader(), "fromJsonObject", JSONObject.class, boolean.class,
+            findAndHookMethod("com.netease.hearttouch.hthttpdns.model.DNSEntity", CloudMusicPackage.getClassLoader(), "fromJsonObject", new Object[]{JSONObject.class, boolean.class,
                     new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -56,7 +56,7 @@ public class Oversea extends Hooker {
                                 }
                             }
                         }
-                    }
+                    }}
             );
         }
     }

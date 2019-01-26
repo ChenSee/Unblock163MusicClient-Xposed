@@ -39,11 +39,11 @@ public class HookerDispatcher implements IHookerDispatcher {
 
         if (lpparam.packageName.equals(BuildConfig.APPLICATION_ID)) {
             findAndHookMethod(findClass(SettingsActivity.class.getName(), lpparam.classLoader),
-                    "getActivatedModuleVersion", XC_MethodReplacement.returnConstant(BuildConfig.VERSION_CODE));
+                    "getActivatedModuleVersion", new Object[]{XC_MethodReplacement.returnConstant(BuildConfig.VERSION_CODE)});
         }
 
         if (lpparam.packageName.equals(CloudMusicPackage.PACKAGE_NAME)) {
-            findAndHookMethod(findClass("com.netease.cloudmusic.NeteaseMusicApplication", lpparam.classLoader), "attachBaseContext", Context.class, new XC_MethodHook() {
+            findAndHookMethod(findClass("com.netease.cloudmusic.NeteaseMusicApplication", lpparam.classLoader), "attachBaseContext", new Object[]{Context.class, new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 
@@ -59,7 +59,7 @@ public class HookerDispatcher implements IHookerDispatcher {
 
 
                 }
-            });
+            }});
         }
     }
 

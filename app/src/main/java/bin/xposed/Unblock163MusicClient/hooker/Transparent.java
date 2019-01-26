@@ -81,7 +81,7 @@ public class Transparent extends Hooker {
         if (Settings.isTransparentNavBar()) {
 
             findAndHookMethod("com.netease.cloudmusic.activity.PlayerActivity", CloudMusicPackage.getClassLoader(),
-                    "onCreate", Bundle.class, new XC_MethodHook() {
+                    "onCreate", new Object[]{Bundle.class, new XC_MethodHook() {
                         @Override
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                             Activity playerActivity = (Activity) param.thisObject;
@@ -108,7 +108,7 @@ public class Transparent extends Hooker {
                                 }
                             }
                         }
-                    });
+                    }});
 
         }
     }
