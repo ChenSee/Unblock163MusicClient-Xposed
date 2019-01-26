@@ -14,8 +14,8 @@ android {
     }
     buildTypes {
         release {
-//            minifyEnabled true
-//            shrinkResources true
+            minifyEnabled true
+            shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -38,9 +38,10 @@ dependencies {
 
 afterEvaluate {
     installDebug.doLast {
-        updateVirtualXposedAPP.execute()
-        rebootVirtualXposedAPP.execute()
-        launchVirtualXposedAPP.execute()
+//        updateVirtualXposedAPP.execute()
+//        rebootVirtualXposedAPP.execute()
+//        launchVirtualXposedAPP.execute()
+        restartCloudMusic.execute()
     }
 }
 
@@ -56,4 +57,11 @@ task rebootVirtualXposedAPP(type: Exec) {
 task launchVirtualXposedAPP(type: Exec) {
     def pkg = "com.netease.cloudmusic"
     commandLine android.adbExecutable, 'shell', 'am', 'broadcast', '-a', 'io.va.exposed.CMD', '-e', 'cmd', 'launch', '-e', 'pkg', pkg
+    commandLine android.adbExecutable, 'shell', 'am', 'force-stop', pkg
+}
+
+task restartCloudMusic(type: Exec) {
+    def pkg = "com.netease.cloudmusic"
+    commandLine 'adb', 'shell', 'am', 'force-stop', pkg
+    commandLine 'adb', 'shell', 'monkey', '-p', pkg, "1"
 }
