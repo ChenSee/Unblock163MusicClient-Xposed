@@ -46,7 +46,7 @@ public class HotXposed {
             throws ClassNotFoundException {
         if ("de.robv.android.xposed.installer".equals(lpparam.packageName)) {
             XposedHelpers.findAndHookMethod(XposedHelpers.findClass("de.robv.android.xposed.installer.util.NotificationUtil", lpparam.classLoader),
-                    "showModulesUpdatedNotification", new XC_MethodHook() {
+                    "showModulesUpdatedNotification", new Object[]{new XC_MethodHook() {
                         @Override
                         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                             param.setResult(new Object());
@@ -56,7 +56,7 @@ public class HotXposed {
                         protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                             super.afterHookedMethod(param);
                         }
-                    });
+                    }});
         }
     }
 

@@ -14,8 +14,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+//            minifyEnabled true
+//            shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -32,7 +32,6 @@ android {
 dependencies {
     compileOnly 'de.robv.android.xposed:api:53'
     compileOnly 'de.robv.android.xposed:api:53:sources'
-    implementation 'dnsjava:dnsjava:2.1.8'
     implementation 'com.annimon:stream:1.2.0'
     implementation project(path: ':hotxposed')
 }
